@@ -33,10 +33,10 @@ jobs:
         run: npm ci
       - name: build project
         run: npm run build
-      - name: upload artifacts
-        uses: actions/upload-artifact@v4
+      - name: upload artifacts  
+        uses: actions/upload-artifact@v4 #action used for uploading artifacts from build job runner to github
         with:
-          name: my-artifacts
+          name: my-artifacts #name of artifcts storage dir
           path: |
             dist
             package.json
@@ -50,3 +50,9 @@ jobs:
         run: npm ci
       - name: deploy project
         run: echo "deploying"
+      - name: download artifacts
+        uses: actions/download-artifact@v4 #action used for downloading artifacts from github to deployment job runner
+        with:
+          name: my-artifacts # here you need to mention the same name as mentioned in previous build job, using the same name contents of artifacts dir will be unzipped and will be availabe in deployment job
+      - name: output artifacts content
+        run: ls
